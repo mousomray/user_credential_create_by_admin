@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../common/head.ejs') %>
+  <body>
+    <%- include('../common/usernavbar.ejs') %> <%- include('../common/usersidebar.ejs')
+    %>
+
+    <h1
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      "
+    >
+      Welcome To <%= user.first_name %> your post is <%= user.role %>
+    </h1>
+
+    <%- include('../common/footer.ejs') %>
+  </body>
+</html>
