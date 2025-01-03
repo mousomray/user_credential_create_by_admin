@@ -73,9 +73,9 @@ class authcontroller {
                 })
             }
             // Check if the user is an admin
-            if (user.role !== 'admin') {
+            if (user.role !== 'projectmanager') {
                 return res.status(400).json({
-                    message: "Admin pannel only can access by admin"
+                    message: "Admin pannel only can access by projectmanager"
                 })
             }
             const isMatch = comparePassword(password, user.password)

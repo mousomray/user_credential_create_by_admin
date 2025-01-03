@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     },
     role: {
         type: String,
-        default: 'admin', // Set default value to 'admin'
+        default: 'projectmanager', // Set default value to 'projectmanager'
     }
 })
 

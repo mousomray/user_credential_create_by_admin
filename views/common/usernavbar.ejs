@@ -10,9 +10,14 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a href="/<%= user.role %>/dashboard" class="nav-link">Home</a>
     </li>
+    <li class="nav-item d-none d-sm-inline-block">
+      <a href="/<%= user.role %>/updatepassword" class="nav-link"
+        >Updatepassword</a
+      >
+    </li>
     <% if(user){ %>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="/userlogout" class="nav-link">Logout</a>
+      <a href="/<%= user.role %>/userlogout" class="nav-link">Logout</a>
     </li>
     <% } %>
   </ul>

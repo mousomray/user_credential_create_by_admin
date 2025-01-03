@@ -10,6 +10,8 @@ router.post('/addusercreate', adminAuth, uploadImage.single('image'), usercontro
 router.get('/:role/login', usercontroller.loginGet); // For login page
 router.post('/:role/logincreate', usercontroller.loginPost); // For login form submission
 router.get('/:role/dashboard', userAuth, usercontroller.dashboardpage);//Dynamic user dashboard
-router.get('/userlogout', usercontroller.logout); // For Logout
+router.get('/:role/updatepassword', userAuth, usercontroller.updatepasswordGet);
+router.post('/:role/updatepasswordcreate', userAuth, usercontroller.updatepasswordPost);
+router.get('/:role/userlogout', usercontroller.logout); // For Logout
 
 module.exports = router;    

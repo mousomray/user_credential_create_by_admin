@@ -77,7 +77,7 @@ class usercontroller {
 
             await transporter.sendMail(mailbody);
 
-            req.flash('sucess', 'User register successfully credential sent your email');
+            req.flash('sucess', 'User register successfully credential sent user email');
             return res.redirect('/adduser');
         } catch (error) {
             console.error(error);
@@ -161,11 +161,55 @@ class usercontroller {
         }
     };
 
+    // Show update password form
+    async updatepasswordGet(req, res) {
+        const role = req.params.role; // Dynamically get role from route
+        return res.render('userview/userupdatepassword', { user: req.user, role });
+    }
+
+    // Update Password post 
+    async updatepasswordPost(req, res) {
+        try {
+            const userId = req.user._id; // Get user ID from token
+            const role = req.params.role; // Dynamically get role from route
+            const { newPassword, confirmPassword } = req.body;
+            if (!newPassword || !confirmPassword) {
+                req.flash('err', "All fields are required")
+                return res.redirect(`/${role}/updatepassword`)
+            }
+            if (newPassword.length < 8) {
+                req.flash('err', "Password should be atleast 8 characters long")
+                return res.redirect(`/${role}/updatepassword`)
+            }
+            if (newPassword !== confirmPassword) {
+                req.flash('err', "Password don't match")
+                return res.redirect(`/${role}/updatepassword`)
+            }
+            const user = await UserModel.findById(userId);
+            if (!user) {
+                req.flash('err', "User not found")
+                return res.redirect(`/${role}/updatepassword`)
+            }
+            const salt = bcrypt.genSaltSync(10);
+            const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedNewPassword;
+            await user.save();
+            req.flash('sucess', 'Password update successfully')
+            return res.redirect(`/${role}/dashboard`);
+        } catch (error) {
+            req.flash('err', "Error updating password")
+            return res.redirect(`/${role}/updatepassword`)
+        }
+    }
+
+
     // Handle Logout
     async logout(req, res) {
+        const role = req.params.role; // Dynamically get role from route
+        console.log("My role...",role)
         res.clearCookie('user_auth');
         req.flash('sucess', 'Logout Successfully')
-        return res.redirect('https://mail.google.com/mail/u/0/#inbox/FMfcgzQXKNDCVQhPpbWTNJFXvqgwVPTq');
+        return res.redirect(`/${role}/login`);
     }
 
 }

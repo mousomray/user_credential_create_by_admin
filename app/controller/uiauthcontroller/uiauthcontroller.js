@@ -62,8 +62,8 @@ class uiauthcontroller {
                 return res.redirect('/admin/signin');
             }
             // Check if the user is an admin
-            if (user.role !== 'admin') {
-                req.flash('err', 'Admin pannel only can access by admin');
+            if (user.role !== 'projectmanager') {
+                req.flash('err', 'Admin pannel only can access by projectmanager');
                 return res.redirect('/admin/signin');
             }
             const isMatch = comparePassword(password, user.password);
